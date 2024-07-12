@@ -70,15 +70,18 @@ const mergeJsonFiles = (targetPath, sourcePath, locale) => {
 
 // 提取有关 intel 的所有 json
 const extractMessages = () => {
-  execSync(`npm run extract`, (error, _stdout, stderr) => {
-    if (error) {
-      return;
-    }
+  execSync(
+    `npx formatjs extract "src/**/*.tsx" --out-file ${extractTempFile}`,
+    (error, _stdout, stderr) => {
+      if (error) {
+        return;
+      }
 
-    if (stderr) {
-      console.error(`提取消息的错误: ${stderr}`);
-    }
-  });
+      if (stderr) {
+        console.error(`提取消息的错误: ${stderr}`);
+      }
+    },
+  );
 };
 
 const removeFolder = (folder) => {
