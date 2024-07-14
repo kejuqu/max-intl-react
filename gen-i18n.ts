@@ -3,20 +3,27 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
+const isWindow = os.platform().startsWith('win');
 const defaultLocale = 'zh-CN';
 // 定义系统支持的所有语言环境对应的 locales
 const locales = [defaultLocale, 'en-US'];
 const tempFolder = path.join(__dirname, './src/temp');
 // 临时提取有关 intel 的所有 json 配置文件（只是临时使用，所以将会被删除）
-const extractTempFile = path.join('./src/temp/extractLocale.json');
+const filePath = path.join('./src/temp/extractLocale.json');
+const extractTempFile = isWindow ? filePath.replace(/\\/g, '/') : filePath;
 
 /**
  * 合并两个JSON文件，更新目标JSON文件
  * @param {string} targetPath - 目标JSON文件路径（需要更新的文件）
  * @param {string} sourcePath - 源JSON文件路径（将被合并的文件）
  */
-const mergeJsonFiles = (targetPath, sourcePath, locale) => {
+const mergeJsonFiles = (
+  targetPath: string,
+  sourcePath: string,
+  locale: string,
+) => {
   try {
     // 读取两个JSON文件
     let dataTarget = JSON.parse(fs.readFileSync(targetPath, 'utf8'));
@@ -27,7 +34,7 @@ const mergeJsonFiles = (targetPath, sourcePath, locale) => {
       dataTarget = {};
     }
 
-    const needTransitionObj = {};
+    const needTransitionObj: Record<string, string> = {};
 
     // 遍历源JSON文件的所有键值对
     for (const key in dataSource) {
@@ -72,7 +79,7 @@ const mergeJsonFiles = (targetPath, sourcePath, locale) => {
 const extractMessages = () => {
   execSync(
     `npx formatjs extract "src/**/*.tsx" --out-file ${extractTempFile}`,
-    (error, _stdout, stderr) => {
+    (error: Error, _stdout: any, stderr: any) => {
       if (error) {
         return;
       }
@@ -84,7 +91,7 @@ const extractMessages = () => {
   );
 };
 
-const removeFolder = (folder) => {
+const removeFolder = (folder: string) => {
   if (fs.existsSync(folder)) {
     fs.rm(
       folder,
@@ -92,7 +99,7 @@ const removeFolder = (folder) => {
         recursive: true,
         force: true,
       },
-      (error) => {
+      (error: Error) => {
         if (error) {
           console.error('删除临时文件错误，请手动删除');
         }
@@ -102,12 +109,13 @@ const removeFolder = (folder) => {
 };
 
 // 编译提取的临时文件，并生成对应语言环境的 json
-const compileMessages = (locale) => {
-  const tempLocaleFile = path.join('./src/temp', `${locale}.json`);
+const compileMessages = (locale: string) => {
+  const filePath = path.join('./src/temp', `${locale}.json`);
+  const tempLocaleFile = isWindow ? filePath.replace(/\\/g, '/') : filePath;
 
   execSync(
     `npx formatjs compile ${extractTempFile} --out-file ${tempLocaleFile}`,
-    (error) => {
+    (error: Error) => {
       if (error) {
         console.error(`编译临时文件错误: ${error}`);
       }
