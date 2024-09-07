@@ -1,4 +1,17 @@
 {
-  "i18n-ally.localesPaths": ["src/locales"],
-  "css.lint.unknownAtRules": "ignore"
+  "i18n-ally.localesPaths": [
+    "src/locales"
+  ],
+  "eslint.enable": true,
+  "eslint.format.enable": true,
+  "eslint.run": "onSave",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
 }

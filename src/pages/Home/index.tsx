@@ -1,7 +1,8 @@
 import Guide from '@/components/Guide';
 import { trim } from '@/utils/format';
 import { PageContainer } from '@ant-design/pro-components';
-import { FormattedMessage, useIntl, useModel } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
+import { Button } from 'antd';
 import { defineMessages } from 'react-intl';
 import styles from './index.less';
 
@@ -59,10 +60,17 @@ const HomePage: React.FC = () => {
   const { name } = useModel('global');
   return (
     <PageContainer ghost>
-      <FormattedMessage id="welcome" defaultMessage="你好" />
       <div className={styles.container}>
         <Guide name={trim(name)} />
       </div>
+      <Button type="primary" className="bg-indigo-500 text-white hover:bg-indigo-300">
+        button
+      </Button>
+
+
+
+
+
 
       {Object.entries(intlObj).map(([key, value], i) => {
         return (

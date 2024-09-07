@@ -20,6 +20,7 @@
     "@umijs/max": "^4.2.9",
     "antd": "^5.18.0",
     "babel-plugin-react-intl": "^8.2.25",
+    "click-to-react-component": "^1.1.0",
     "react-intl": "^6.6.8"
   },
   "devDependencies": {

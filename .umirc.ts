@@ -9,6 +9,7 @@ export default defineConfig({
   layout: {
     title: '@umijs/max',
   },
+  mako: {},
   routes: [
     {
       path: '/',
@@ -41,6 +42,5 @@ export default defineConfig({
     title: false,
     useLocalStorage: true,
   },
-  clickToComponent: {},
   tailwindcss: {},
 });
