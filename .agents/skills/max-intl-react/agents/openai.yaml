@@ -1,0 +1,6 @@
+interface:
+  display_name: "Max Intl React"
+  short_description: "Repo-specific patterns and workflows for max-intl-react"
+  default_prompt: "Use the max-intl-react repo skill to follow existing architecture, testing, and workflow conventions."
+policy:
+  allow_implicit_invocation: true
